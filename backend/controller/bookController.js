@@ -81,3 +81,19 @@ export const searchBook = async(req,res)=>{
         res.status(500).send("Error searching book" + err.message);
     }
 }
+
+export const deleteBook = async(req,res)=>{
+    try{
+        const {id} = req.params;
+        if(id!=null){
+            const book = await Book.findOneAndDelete({id:id});
+            if(book){
+                res.status(200).send("Book deleted");
+            }else{
+                res.status(404).send("Book not found");
+            }
+        }
+    }catch(err){
+        res.status(500).send("Error deleting book" + err.message);
+    }
+}
